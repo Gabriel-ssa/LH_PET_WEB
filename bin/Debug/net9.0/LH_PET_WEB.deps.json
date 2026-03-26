@@ -1,0 +1,23 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v9.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v9.0": {
+      "LH_PET_WEB/1.0.0": {
+        "runtime": {
+          "LH_PET_WEB.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "LH_PET_WEB/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}
