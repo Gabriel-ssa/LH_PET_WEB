@@ -5,7 +5,6 @@ using Microsoft.AspNetCore.Hosting;
 using LH_PET_WEB.Data;
 using LH_PET_WEB.Models;
 using System.IO;
-using Microsoft.Build.Experimental.ProjectCache;
 
 namespace LH_PET_WEB.Controllers
 {
