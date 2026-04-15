@@ -8,7 +8,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace LH_PET_WEB.Models
 {
     [Table("tb_fornecedor")]
-    public class ArquivoFornecedor
+    public class Fornecedor
     {
         [Key]
         [Column("pk_fornecedor")]

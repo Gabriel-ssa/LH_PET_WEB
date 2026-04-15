@@ -28,12 +28,68 @@ build_property._RazorSourceGeneratorDebug =
 build_property.EffectiveAnalysisLevelStyle = 9.0
 build_property.EnableCodeStyleSeverity = 
 
+[C:/Users/ead_dev/Documents/Gabriel_Almeida/LH_PET_WEB/Views/Atendimento/Historico.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQXRlbmRpbWVudG9cSGlzdG9yaWNvLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/ead_dev/Documents/Gabriel_Almeida/LH_PET_WEB/Views/Atendimento/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQXRlbmRpbWVudG9cSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/ead_dev/Documents/Gabriel_Almeida/LH_PET_WEB/Views/Atendimento/NovoAgendamento.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQXRlbmRpbWVudG9cTm92b0FnZW5kYW1lbnRvLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/ead_dev/Documents/Gabriel_Almeida/LH_PET_WEB/Views/Atendimento/Prontuario.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQXRlbmRpbWVudG9cUHJvbnR1YXJpby5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/ead_dev/Documents/Gabriel_Almeida/LH_PET_WEB/Views/Atendimento/VerProntuario.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQXRlbmRpbWVudG9cVmVyUHJvbnR1YXJpby5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/ead_dev/Documents/Gabriel_Almeida/LH_PET_WEB/Views/Autenticacao/EsqueciSenha.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQXV0ZW50aWNhY2FvXEVzcXVlY2lTZW5oYS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/ead_dev/Documents/Gabriel_Almeida/LH_PET_WEB/Views/Autenticacao/Login.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQXV0ZW50aWNhY2FvXExvZ2luLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/ead_dev/Documents/Gabriel_Almeida/LH_PET_WEB/Views/Autenticacao/RedefinirSenha.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQXV0ZW50aWNhY2FvXFJlZGVmaW5pclNlbmhhLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/ead_dev/Documents/Gabriel_Almeida/LH_PET_WEB/Views/Configuracao/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ29uZmlndXJhY2FvXEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/ead_dev/Documents/Gabriel_Almeida/LH_PET_WEB/Views/Home/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/ead_dev/Documents/Gabriel_Almeida/LH_PET_WEB/Views/Home/Privacy.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxQcml2YWN5LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/ead_dev/Documents/Gabriel_Almeida/LH_PET_WEB/Views/Painel/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGFpbmVsXEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/ead_dev/Documents/Gabriel_Almeida/LH_PET_WEB/Views/Produtos/Criar.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHJvZHV0b3NcQ3JpYXIuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/ead_dev/Documents/Gabriel_Almeida/LH_PET_WEB/Views/Produtos/Editar.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHJvZHV0b3NcRWRpdGFyLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/ead_dev/Documents/Gabriel_Almeida/LH_PET_WEB/Views/Produtos/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHJvZHV0b3NcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/ead_dev/Documents/Gabriel_Almeida/LH_PET_WEB/Views/Relatorios/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmVsYXRvcmlvc1xJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/ead_dev/Documents/Gabriel_Almeida/LH_PET_WEB/Views/Shared/Error.cshtml]
@@ -46,6 +102,26 @@ build_metadata.AdditionalFiles.CssScope =
 
 [C:/Users/ead_dev/Documents/Gabriel_Almeida/LH_PET_WEB/Views/Shared/_ValidationScriptsPartial.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9WYWxpZGF0aW9uU2NyaXB0c1BhcnRpYWwuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/ead_dev/Documents/Gabriel_Almeida/LH_PET_WEB/Views/Usuarios/Criar.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXN1YXJpb3NcQ3JpYXIuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/ead_dev/Documents/Gabriel_Almeida/LH_PET_WEB/Views/Usuarios/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXN1YXJpb3NcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/ead_dev/Documents/Gabriel_Almeida/LH_PET_WEB/Views/Vendas/Historico.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVmVuZGFzXEhpc3Rvcmljby5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/ead_dev/Documents/Gabriel_Almeida/LH_PET_WEB/Views/Vendas/PDV.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVmVuZGFzXFBEVi5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/ead_dev/Documents/Gabriel_Almeida/LH_PET_WEB/Views/Vendas/Recibo.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVmVuZGFzXFJlY2liby5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/ead_dev/Documents/Gabriel_Almeida/LH_PET_WEB/Views/_ViewImports.cshtml]

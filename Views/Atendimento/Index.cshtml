@@ -1,0 +1,95 @@
+@model IEnumerable<LH_PET_WEB.Models.Agendamento>
+@{
+    ViewData["Title"] = "Agenda e Atendimentos";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2 class="fw-bold text-dark"><i class="fa-solid fa-calendar-check text-success me-2"></i> Agenda da Clínica</h2>
+    
+    <a asp-action="NovoAgendamento" class="btn btn-success rounded-pill fw-bold">
+        <i class="fa-solid fa-plus me-1"></i> Novo Encaixe
+    </a>
+</div>
+
+<div class="card card-premium border-0 overflow-hidden">
+    <div class="table-responsive">
+        <table class="table table-hover align-middle mb-0">
+            <thead class="bg-light text-secondary">
+                <tr>
+                    <th class="py-3 px-4">Data/Hora</th>
+                    <th class="py-3">Pet (Cliente)</th>
+                    <th class="py-3">Serviço</th>
+                    <th class="py-3 text-center">Status</th>
+                    <th class="py-3 text-end px-4">Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td class="py-3 px-4 fw-semibold">@item.DataHora.ToString("dd/MM/yyyy HH:mm")</td>
+                        <td class="py-3">
+                            <i class="fa-solid fa-paw text-primary me-1"></i> <strong>@item.Pet!.Nome</strong><br />
+                            <small class="text-muted">Tutor: @item.Pet.Cliente!.Nome</small>
+                        </td>
+                        <td class="py-3">
+                            @if(item.Tipo == "Consulta")
+                            {
+                                <span class="badge bg-warning text-dark"><i class="fa-solid fa-stethoscope me-1"></i> Consulta</span>
+                            }
+                            else if(item.Tipo == "Banho")
+                            {
+                                <span class="badge bg-info"><i class="fa-solid fa-shower me-1"></i> Banho</span>
+                            }
+                            else
+                            {
+                                <span class="badge bg-secondary"><i class="fa-solid fa-scissors me-1"></i> Tosa</span>
+                            }
+                        </td>
+                        <td class="py-3 text-center">
+                            @if(item.Status == "Pendente")
+                            {
+                                <span class="badge bg-warning text-dark rounded-pill px-3">Pendente</span>
+                            }
+                            else if(item.Status == "Concluído")
+                            {
+                                <span class="badge bg-success rounded-pill px-3">Concluído</span>
+                            }
+                            else
+                            {
+                                <span class="badge bg-danger rounded-pill px-3">Cancelado</span>
+                            }
+                        </td>
+                        <td class="py-3 text-end px-4">
+                            <div class="d-flex justify-content-end gap-2">
+                                <form asp-action="AtualizarStatus" method="post" class="d-inline">
+                                    <input type="hidden" name="id" value="@item.Id" />
+                                    <select name="novoStatus" class="form-select form-select-sm d-inline w-auto" onchange="this.form.submit()">
+                                        <option value="">Mudar Status</option>
+                                        <option value="Pendente">Pendente</option>
+                                        <option value="Concluído">Concluído</option>
+                                        <option value="Cancelado">Cancelado</option>
+                                    </select>
+                                </form>
+
+                                @if (item.Tipo == "Consulta")
+                                {
+                                    <a asp-action="Prontuario" asp-route-agendamentoId="@item.Id" class="btn btn-sm btn-premium rounded-pill px-3">
+                                        <i class="fa-solid fa-file-medical me-1"></i> Prontuário
+                                    </a>
+                                }
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+        
+        @if (!Model.Any())
+        {
+            <div class="text-center py-5">
+                <h5 class="text-muted"><i class="fa-regular fa-calendar-xmark mb-3 fs-1 d-block"></i> Nenhum agendamento encontrado.</h5>
+            </div>
+        }
+    </div>
+</div>

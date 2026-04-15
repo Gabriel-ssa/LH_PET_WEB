@@ -1,31 +1,86 @@
-html {
-  font-size: 14px;
-}
-
-@media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
-}
-
-.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
-  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
-}
-
-html {
-  position: relative;
-  min-height: 100%;
+:root {
+    --primary-color: #0d6efd;
+    --secondary-color: #20c997;
+    --dark-color: #2b3035;
+    --light-bg: #f4f7f6;
+    --card-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+    --transition-speed: 0.3s;
 }
 
 body {
-  margin-bottom: 60px;
+    background-color: var(--light-bg);
+    font-family: 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    color: var(--dark-color);
 }
 
-.form-floating > .form-control-plaintext::placeholder, .form-floating > .form-control::placeholder {
-  color: var(--bs-secondary-color);
-  text-align: end;
+/* Navbar Premium */
+.navbar-premium {
+    background: linear-gradient(135deg, var(--primary-color), #0a58ca);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+.navbar-premium .navbar-brand, .navbar-premium .nav-link {
+    color: #fff !important;
+    font-weight: 500;
+}
+.navbar-premium .nav-link:hover {
+    color: #e9ecef !important;
+    transform: translateY(-1px);
 }
 
-.form-floating > .form-control-plaintext:focus::placeholder, .form-floating > .form-control:focus::placeholder {
-  text-align: start;
+/* Cards com efeito Glass/Sombra */
+.card-premium {
+    background: #ffffff;
+    border: none;
+    border-radius: 15px;
+    box-shadow: var(--card-shadow);
+    transition: transform var(--transition-speed);
+}
+.card-premium:hover {
+    transform: translateY(-5px);
+}
+
+/* Inputs Estilizados */
+.form-control-premium {
+    border-radius: 10px;
+    border: 1px solid #ced4da;
+    padding: 0.75rem 1rem;
+    transition: all var(--transition-speed);
+}
+.form-control-premium:focus {
+    border-color: var(--secondary-color);
+    box-shadow: 0 0 0 0.25rem rgba(32, 201, 151, 0.25);
+}
+
+/* Botões Modernos */
+.btn-premium {
+    border-radius: 10px;
+    padding: 0.6rem 1.5rem;
+    font-weight: 600;
+    transition: all var(--transition-speed);
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+}
+.btn-premium:hover {
+    background-color: #0b5ed7;
+    box-shadow: 0 5px 15px rgba(13, 110, 253, 0.3);
+    color: white;
+}
+
+.btn-secondary-premium {
+    background-color: var(--secondary-color);
+    color: white;
+}
+.btn-secondary-premium:hover {
+    background-color: #1aa179;
+    box-shadow: 0 5px 15px rgba(32, 201, 151, 0.3);
+    color: white;
+}
+
+/* Centralização para telas de Login/Senha */
+.auth-wrapper {
+    min-height: 80vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }

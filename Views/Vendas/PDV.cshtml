@@ -1,0 +1,77 @@
+@model IEnumerable<LH_PET_WEB.Models.Produto>
+@{
+    ViewData["Title"] = "PDV - Frente de Caixa";
+}
+
+<div class="row h-100 mb-4">
+    <div class="col-md-8">
+        <div class="card card-premium p-3 border-0 shadow-sm h-100">
+            <h5 class="fw-bold mb-3 text-primary"><i class="fa-solid fa-tags me-2"></i> Produtos Disponíveis</h5>
+            
+            <div class="row row-cols-1 row-cols-md-3 g-3 overflow-auto" style="max-height: 70vh;">
+                @foreach (var p in Model)
+                {
+                    <div class="col">
+                        <div class="card h-100 border text-center p-2" style="cursor: pointer; transition: 0.2s;" onclick="adicionarAoCarrinho(@p.Id, '@p.Nome.Replace("'", "\\'")', @p.Preco.ToString("0.00", System.Globalization.CultureInfo.InvariantCulture), @p.Estoque)">
+                            
+                            <div class="bg-light mb-2 d-flex align-items-center justify-content-center rounded overflow-hidden" style="height: 120px;">
+                                @if (!string.IsNullOrEmpty(p.ImagemUrl))
+                                {
+                                    <img src="@p.ImagemUrl" alt="@p.Nome" class="w-100 h-100" style="object-fit: cover;">
+                                }
+                                else
+                                {
+                                    <i class="fa-solid fa-box text-muted fs-1"></i>
+                                }
+                            </div>
+                            <h6 class="fw-bold text-truncate small mb-1" title="@p.Nome">@p.Nome</h6>
+                            <span class="text-success fw-bold">R$ @p.Preco.ToString("N2")</span>
+                            <span class="badge bg-secondary mt-1">Estoque: @p.Estoque</span>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <div class="card card-premium p-0 border-0 shadow-sm h-100 d-flex flex-column">
+            <div class="card-header bg-dark text-white p-3">
+                <h5 class="fw-bold mb-0 text-center"><i class="fa-solid fa-cart-shopping me-2"></i> Cupom Fiscal</h5>
+            </div>
+            
+            <div class="card-body p-0 flex-grow-1 overflow-auto" style="min-height: 300px; max-height: 400px;">
+                <table class="table table-hover table-sm align-middle mb-0">
+                    <tbody id="listaCarrinho">
+                        <tr><td class="text-center text-muted py-5">O carrinho está vazio.</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="card-footer bg-light p-3 border-top">
+                <div class="d-flex justify-content-between mb-3">
+                    <span class="fs-5 fw-bold text-secondary">TOTAL:</span>
+                    <span class="fs-4 fw-bold text-success" id="valorTotal">R$ 0,00</span>
+                </div>
+                
+                <div class="mb-3">
+                    <label class="form-label fw-bold small">Forma de Pagamento</label>
+                    <select id="formaPagamento" class="form-select form-select-lg fw-bold">
+                        <option value="Dinheiro">Dinheiro</option>
+                        <option value="Pix">Pix</option>
+                        <option value="Cartao_Credito">Cartão de Crédito</option>
+                        <option value="Cartao_Debito">Cartão de Débito</option>
+                    </select>
+                </div>
+
+                <button id="btnFinalizar" class="btn btn-success btn-lg w-100 fw-bold shadow" onclick="finalizarVenda()" disabled>
+                    <i class="fa-solid fa-check me-2"></i> Finalizar Venda
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="~/js/pdv.js" asp-append-version="true"></script>
+}

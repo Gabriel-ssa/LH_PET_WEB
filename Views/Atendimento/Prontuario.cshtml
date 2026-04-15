@@ -1,0 +1,48 @@
+@model LH_PET_WEB.Models.Atendimento
+@{
+    ViewData["Title"] = "Atendimento Clínico";
+}
+
+<div class="row justify-content-center">
+    <div class="col-md-10">
+        <div class="card card-premium p-4 border-0">
+            <h4 class="fw-bold mb-4 border-bottom pb-2 text-warning"><i class="fa-solid fa-notes-medical me-2"></i> Prontuário Médico</h4>
+            
+            <div class="alert alert-light border border-warning border-start-5 mb-4">
+                <strong><i class="fa-solid fa-paw me-2"></i> Paciente:</strong> @Model.Agendamento?.Pet?.Nome <br />
+                <strong><i class="fa-regular fa-clock me-2"></i> Agendamento:</strong> @Model.Agendamento?.DataHora.ToString("dd/MM/yyyy HH:mm")
+            </div>
+
+            <form asp-action="SalvarProntuario" method="post">
+                <input type="hidden" asp-for="AgendamentoId" />
+
+                <div class="mb-3">
+                    <label asp-for="Prontuario" class="form-label fw-semibold">Sintomas / Histórico (Anamnese)</label>
+                    <textarea asp-for="Prontuario" class="form-control form-control-premium" rows="3" placeholder="Relato do tutor e observações iniciais..."></textarea>
+                    <span asp-validation-for="Prontuario" class="text-danger small"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="Diagnostico" class="form-label fw-semibold">Diagnóstico Médico</label>
+                    <textarea asp-for="Diagnostico" class="form-control form-control-premium" rows="3" placeholder="Conclusão clínica..."></textarea>
+                    <span asp-validation-for="Diagnostico" class="text-danger small"></span>
+                </div>
+
+                <div class="mb-4">
+                    <label asp-for="Prescricao" class="form-label fw-semibold">Prescrição / Receita</label>
+                    <textarea asp-for="Prescricao" class="form-control form-control-premium" rows="4" placeholder="Medicamentos, dosagens e orientações de cuidado..."></textarea>
+                    <span asp-validation-for="Prescricao" class="text-danger small"></span>
+                </div>
+
+                <div class="d-flex justify-content-between mt-4">
+                    <a asp-action="Index" class="btn btn-light rounded-pill px-4 text-secondary fw-bold"><i class="fa-solid fa-arrow-left me-1"></i> Cancelar</a>
+                    <button type="submit" class="btn btn-warning text-dark fw-bold rounded-pill px-5"><i class="fa-solid fa-check-double me-1"></i> Salvar e Concluir Atendimento</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

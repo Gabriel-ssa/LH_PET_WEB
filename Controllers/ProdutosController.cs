@@ -12,12 +12,12 @@ namespace LH_PET_WEB.Controllers
  public class ProdutosController : Controller
     {
         private readonly ContextoBanco _contexto;
-        private readonly IWebHostEnvironment HostEnvironment;
+        private readonly IWebHostEnvironment _hostEnvironment;
 
         public ProdutosController(ContextoBanco contexto, IWebHostEnvironment hostEnvironment)
         {
             _contexto = contexto;
-            HostEnvironment = hostEnvironment;
+            _hostEnvironment = hostEnvironment;
         }
         [HttpGet]
         public async Task<IActionResult> Index()
@@ -46,7 +46,7 @@ namespace LH_PET_WEB.Controllers
 
             if (foto != null && foto.Length > 0)
             {
-                string pastaDestino = Path.Combine(HostEnvironment.WebRootPath, "uploads", "produtos");
+                string pastaDestino = Path.Combine(_hostEnvironment.WebRootPath, "uploads", "produtos");
                 Directory.CreateDirectory(pastaDestino);
 
                 string nomeArquivoUnico = Guid.NewGuid().ToString() + " " + foto.FileName;
@@ -114,8 +114,8 @@ namespace LH_PET_WEB.Controllers
                         if (produtoBanco != null) model.ImagemUrl = produtoBanco.ImagemUrl;
                     }
 
-                    contexto.Produtos.Update(model);
-                    await contexto.SaveChangesAsync();
+                    _contexto.Produtos.Update(model);
+                    await _contexto.SaveChangesAsync();
                     TempData["Sucesso"] = "Produto atualizado com sucesso!";
                 }
                 catch (DbUpdateConcurrencyException)

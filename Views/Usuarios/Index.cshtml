@@ -1,0 +1,71 @@
+@model IEnumerable<LH_PET_WEB.Models.Usuario>
+@{
+    ViewData["Title"] = "Gestão da Equipe";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2 class="fw-bold text-dark"><i class="fa-solid fa-users-gear text-primary me-2"></i> Equipe da Clínica</h2>
+    <a asp-action="Criar" class="btn btn-premium"><i class="fa-solid fa-plus me-1"></i> Novo Colaborador</a>
+</div>
+
+<div class="card card-premium p-0 border-0 overflow-hidden">
+    <div class="table-responsive">
+        <table class="table table-hover align-middle mb-0">
+            <thead class="bg-light text-secondary">
+                <tr>
+                    <th class="py-3 px-4">Colaborador</th>
+                    <th class="py-3">E-mail Corporativo</th>
+                    <th class="py-3">Cargo</th>
+                    <th class="py-3 text-center">Status</th>
+                    <th class="py-3 text-end px-4">Ação</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td class="py-3 px-4 fw-bold text-dark"><i class="fa-solid fa-user me-2 text-muted"></i>@item.Nome</td>
+                        <td class="py-3 text-muted">@item.Email</td>
+                        <td class="py-3">
+                            @if(item.Perfil == "Admin")
+                            {
+                                <span class="badge bg-danger rounded-pill px-3"><i class="fa-solid fa-user-shield me-1"></i> Admin</span>
+                            }
+                            else if (item.Perfil == "Funcionario")
+                            {
+                                <span class="badge bg-info rounded-pill px-3"><i class="fa-solid fa-user-tie me-1"></i> Funcionário</span>
+                            }
+                        </td>
+                        <td class="py-3 text-center">
+                            @if (item.Ativo)
+                            {
+                                <span class="badge bg-success rounded-pill px-3"><i class="fa-solid fa-check-circle me-1"></i> Ativo</span>
+                            }
+                            else
+                            {
+                                <span class="badge bg-secondary rounded-pill px-3"><i class="fa-solid fa-ban me-1"></i> Bloqueado</span>
+                            }
+                        </td>
+                        <td class="py-3 text-end px-4">
+                            <form asp-action="AlternarStatus" method="post" class="d-inline">
+                                <input type="hidden" name="id" value="@item.Id" />
+                                @if (item.Ativo)
+                                {
+                                    <button type="submit" class="btn btn-sm btn-outline-danger rounded-pill px-3" onclick="return confirm('Bloquear este colaborador?');">
+                                        <i class="fa-solid fa-lock me-1"></i> Bloquear
+                                    </button>
+                                }
+                                else
+                                {
+                                    <button type="submit" class="btn btn-sm btn-outline-success rounded-pill px-3">
+                                        <i class="fa-solid fa-unlock me-1"></i> Liberar
+                                    </button>
+                                }
+                            </form>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

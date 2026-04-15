@@ -1,0 +1,105 @@
+@model LH_PET_WEB.Models.ConfiguracaoClinica
+@{
+    ViewData["Title"] = "Configurações da Clínica";
+    
+    // Variável de apoio para facilitar a marcação dos checkboxes
+    string dias = Model?.DiasTrabalho ?? "";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2 class="fw-bold text-dark"><i class="fa-solid fa-gears text-secondary me-2"></i> Regras de Atendimento</h2>
+</div>
+
+<form asp-action="Salvar" method="post">
+    <div class="row g-4">
+        
+        <div class="col-md-6">
+            <div class="card card-premium p-4 border-0 h-100">
+                <h5 class="fw-bold text-primary mb-3"><i class="fa-regular fa-clock me-2"></i> Expediente e Dias</h5>
+                
+                <div class="row g-3 mb-4">
+                    <div class="col-6">
+                        <label class="form-label fw-semibold">Abre às</label>
+                        <input asp-for="HoraAbertura" type="time" class="form-control form-control-premium" required />
+                    </div>
+                    <div class="col-6">
+                        <label class="form-label fw-semibold">Fecha às</label>
+                        <input asp-for="HoraFechamento" type="time" class="form-control form-control-premium" required />
+                    </div>
+                </div>
+
+                <label class="form-label fw-semibold">Dias de Funcionamento</label>
+                <div class="d-flex flex-wrap gap-2 mt-2">
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="checkbox" name="DiasSelecionados" value="0" id="dia0" @(dias.Contains("0") ? "checked" : "")>
+                        <label class="form-check-label" for="dia0">Dom</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="checkbox" name="DiasSelecionados" value="1" id="dia1" @(dias.Contains("1") ? "checked" : "")>
+                        <label class="form-check-label" for="dia1">Seg</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="checkbox" name="DiasSelecionados" value="2" id="dia2" @(dias.Contains("2") ? "checked" : "")>
+                        <label class="form-check-label" for="dia2">Ter</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="checkbox" name="DiasSelecionados" value="3" id="dia3" @(dias.Contains("3") ? "checked" : "")>
+                        <label class="form-check-label" for="dia3">Qua</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="checkbox" name="DiasSelecionados" value="4" id="dia4" @(dias.Contains("4") ? "checked" : "")>
+                        <label class="form-check-label" for="dia4">Qui</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="checkbox" name="DiasSelecionados" value="5" id="dia5" @(dias.Contains("5") ? "checked" : "")>
+                        <label class="form-check-label" for="dia5">Sex</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="checkbox" name="DiasSelecionados" value="6" id="dia6" @(dias.Contains("6") ? "checked" : "")>
+                        <label class="form-check-label" for="dia6">Sáb</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="card card-premium p-4 border-0 h-100">
+                <h5 class="fw-bold text-success mb-3"><i class="fa-solid fa-stopwatch me-2"></i> Duração dos Serviços (Minutos)</h5>
+                
+                <div class="mb-3">
+                    <label class="form-label fw-semibold">Consulta Veterinária</label>
+                    <div class="input-group">
+                        <input asp-for="MinutosConsulta" type="number" class="form-control form-control-premium border-end-0" required />
+                        <span class="input-group-text bg-white text-muted">min</span>
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label fw-semibold">Banho Simples</label>
+                    <div class="input-group">
+                        <input asp-for="MinutosBanho" type="number" class="form-control form-control-premium border-end-0" required />
+                        <span class="input-group-text bg-white text-muted">min</span>
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label fw-semibold">Tosa Completa</label>
+                    <div class="input-group">
+                        <input asp-for="MinutosTosa" type="number" class="form-control form-control-premium border-end-0" required />
+                        <span class="input-group-text bg-white text-muted">min</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-12 mt-4 text-end">
+            <button type="submit" class="btn btn-premium btn-lg rounded-pill px-5 shadow-sm">
+                <i class="fa-solid fa-floppy-disk me-2"></i> Salvar Configurações
+            </button>
+        </div>
+    </div>
+</form>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

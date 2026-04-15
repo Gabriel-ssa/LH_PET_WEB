@@ -8,7 +8,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace LH_PET_WEB.Models
 {
     [Table("tb_agendamento")]
-    public class ArquivoAgendamento
+    public class Agendamento
     {
         [Key]
         public int Id { get; set; }

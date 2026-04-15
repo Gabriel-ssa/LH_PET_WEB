@@ -1,7 +1,5 @@
 using Microsoft.EntityFrameworkCore;
 using LH_PET_WEB.Models;
-using Microsoft.AspNetCore.Mvc;
-using LH_PET_WEB.Controllers;
 
 namespace LH_PET_WEB.Data
 {
@@ -28,7 +26,7 @@ namespace LH_PET_WEB.Data
             base.OnModelCreating(modelBuilder);
 
             modelBuilder.Entity<Produto>().Property(p => p.Preco).HasPrecision(10, 2);
-            modelBuilder.Entity<Venda>().Property(v => v.total).HasPrecision(10, 2);
+            modelBuilder.Entity<Venda>().Property(v => v.Total).HasPrecision(10, 2);
             modelBuilder.Entity<ItemVenda>().Property(i => i.PrecoUnitario).HasPrecision(10, 2);
             modelBuilder.Entity<Usuario>().HasIndex(u => u.Email).IsUnique();
             modelBuilder.Entity<Cliente>().HasIndex(c => c.Cpf).IsUnique();

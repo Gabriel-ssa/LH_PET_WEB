@@ -1,0 +1,54 @@
+@model IEnumerable<LH_PET_WEB.Models.Venda>
+@{
+    ViewData["Title"] = "Histórico de Vendas";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2 class="fw-bold text-dark"><i class="fa-solid fa-list-check text-primary me-2"></i> Relatório de Vendas</h2>
+    <a asp-action="PDV" class="btn btn-success rounded-pill fw-bold shadow-sm">
+        <i class="fa-solid fa-cash-register me-1"></i> Ir para o PDV
+    </a>
+</div>
+
+<div class="card card-premium border-0 overflow-hidden shadow-sm">
+    <div class="table-responsive">
+        <table class="table table-hover align-middle mb-0">
+            <thead class="bg-light text-secondary">
+                <tr>
+                    <th class="py-3 px-4">Nº Recibo</th>
+                    <th class="py-3">Data e Hora</th>
+                    <th class="py-3">Atendente</th>
+                    <th class="py-3">Pagamento</th>
+                    <th class="py-3 fw-bold text-success">Total</th>
+                    <th class="py-3 text-end px-4">Ação</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td class="py-3 px-4 fw-bold text-secondary">#@item.Id.ToString("D6")</td>
+                        <td class="py-3">@item.DataVenda.ToString("dd/MM/yyyy HH:mm")</td>
+                        <td class="py-3"><i class="fa-solid fa-user-tie text-muted me-1"></i> @item.Usuario!.Nome</td>
+                        <td class="py-3">
+                            <span class="badge bg-light text-dark border">@item.FormaPagamento.Replace("_", " ")</span>
+                        </td>
+                        <td class="py-3 fw-bold text-success">R$ @item.Total.ToString("N2")</td>
+                        <td class="py-3 text-end px-4">
+                            <a asp-action="Recibo" asp-route-id="@item.Id" class="btn btn-sm btn-outline-primary rounded-pill px-3 fw-bold">
+                                <i class="fa-solid fa-receipt me-1"></i> Ver Recibo
+                            </a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+        
+        @if (!Model.Any())
+        {
+            <div class="text-center py-5">
+                <h5 class="text-muted"><i class="fa-solid fa-file-invoice-dollar mb-3 fs-1 d-block"></i> Nenhuma venda registrada ainda.</h5>
+            </div>
+        }
+    </div>
+</div>

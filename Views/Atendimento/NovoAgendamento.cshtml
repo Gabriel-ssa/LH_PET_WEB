@@ -1,0 +1,50 @@
+@model LH_PET_WEB.Models.Agendamento
+@{
+    ViewData["Title"] = "Novo Agendamento (Balcão)";
+    var pets = ViewBag.PetsLista as IEnumerable<dynamic>;
+}
+
+<div class="row justify-content-center">
+    <div class="col-md-8 col-lg-6">
+        <div class="card card-premium p-4 border-0">
+            <h4 class="fw-bold mb-4 border-bottom pb-2 text-success"><i class="fa-solid fa-calendar-plus me-2"></i> Agendamento Avulso</h4>
+            
+            <form asp-action="NovoAgendamento" method="post">
+                <div class="mb-3">
+                    <label asp-for="PetId" class="form-label fw-semibold">Paciente (Pet)</label>
+                    <select asp-for="PetId" class="form-select form-control-premium" required>
+                        <option value="">Selecione o pet cadastrado...</option>
+                        @if(pets != null)
+                        {
+                            foreach (var p in pets)
+                            {
+                                <option value="@p.Id">@p.NomeExibicao</option>
+                            }
+                        }
+                    </select>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="Tipo" class="form-label fw-semibold">Tipo de Serviço</label>
+                    <select asp-for="Tipo" class="form-select form-control-premium" required>
+                        <option value="">Escolha...</option>
+                        <option value="Consulta">Consulta Veterinária</option>
+                        <option value="Banho">Banho Simples</option>
+                        <option value="Tosa">Tosa Completa</option>
+                    </select>
+                </div>
+
+                <div class="mb-4">
+                    <label asp-for="DataHora" class="form-label fw-semibold">Data e Hora do Encaixe</label>
+                    <input asp-for="DataHora" type="datetime-local" class="form-control form-control-premium" required />
+                    <div class="form-text mt-2"><i class="fa-solid fa-circle-info text-info me-1"></i> O agendamento via balcão ignora o bloqueio dinâmico para permitir encaixes emergenciais.</div>
+                </div>
+
+                <div class="d-flex justify-content-between mt-4">
+                    <a asp-action="Index" class="btn btn-light rounded-pill px-4 text-secondary fw-bold"><i class="fa-solid fa-arrow-left me-1"></i> Cancelar</a>
+                    <button type="submit" class="btn btn-success text-white fw-bold rounded-pill px-5"><i class="fa-solid fa-check me-1"></i> Confirmar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

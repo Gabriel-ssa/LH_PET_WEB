@@ -1,0 +1,60 @@
+@model LH_PET_WEB.Models.ViewModels.LoginViewModel
+@{
+    ViewData["Title"] = "Login";
+}
+
+<div class="auth-wrapper py-5">
+    <div class="col-md-5 col-lg-4">
+        <div class="card card-premium p-4">
+            <div class="text-center mb-4">
+                <div class="bg-primary text-white rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 70px; height: 70px; font-size: 30px;">
+                    <i class="fa-solid fa-user-md"></i>
+                </div>
+                <h3 class="fw-bold">VetPlus Care</h3>
+                <p class="text-muted">Acesso Administrativo</p>
+            </div>
+
+            <form asp-action="Login" method="post">
+                <div class="mb-3">
+                    <label asp-for="Email" class="form-label fw-semibold">E-mail</label>
+                    <div class="input-group">
+                        <span class="input-group-text bg-white border-end-0 text-muted"><i class="fa-solid fa-envelope"></i></span>
+                        <input asp-for="Email" class="form-control form-control-premium border-start-0" placeholder="seu@email.com" autofocus />
+                    </div>
+                    <span asp-validation-for="Email" class="text-danger small"></span>
+                </div>
+
+                <div class="mb-4">
+                    <label asp-for="Senha" class="form-label fw-semibold">Senha</label>
+                    <div class="input-group">
+                        <span class="input-group-text bg-white border-end-0 text-muted"><i class="fa-solid fa-lock"></i></span>
+                        <input asp-for="Senha" type="password" class="form-control form-control-premium border-start-0" placeholder="••••••••" />
+                    </div>
+                    <span asp-validation-for="Senha" class="text-danger small"></span>
+                </div>
+
+                <button type="submit" class="btn btn-premium w-100 mb-3">
+                    <i class="fa-solid fa-right-to-bracket me-2"></i> Entrar no Painel
+                </button>
+
+                <div class="text-center mb-4">
+                    <a asp-action="EsqueciSenha" class="text-decoration-none text-primary small fw-semibold">Esqueceu sua senha?</a>
+                </div>
+            </form>
+            
+            <hr />
+
+            <div class="text-center mt-3">
+                <p class="text-muted small mb-2 fw-bold">É um Tutor de Pet?</p>
+                <a href="/portal-cliente.html" class="btn btn-secondary-premium w-100 rounded-pill fw-bold">
+                    <i class="fa-solid fa-mobile-screen me-2"></i> Acessar Portal do Cliente
+                </a>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
