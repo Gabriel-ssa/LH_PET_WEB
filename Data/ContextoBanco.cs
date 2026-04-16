@@ -10,7 +10,7 @@ namespace LH_PET_WEB.Data
         }
         
         public DbSet<Usuario> Usuarios { get; set; }
-        public DbSet<Cliente> Clientes { get; set; }
+        public DbSet<Cliente> Cliente { get; set; }
         public DbSet<Pet> Pets { get; set; }
         public DbSet<Fornecedor> Fornecedores { get; set; }
 

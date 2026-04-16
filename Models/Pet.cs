@@ -12,6 +12,13 @@ namespace LH_PET_WEB.Models
         public int Id { get; set; }
         
         [Required]
+        [Column("fk_cliente")]
+        public int ClienteId { get; set; }
+        public Cliente? Cliente { get; set; }
+
+
+
+        [Required]
         [MaxLength(100)]
         [Column("nm_pet")]
         public string Nome { get; set; }

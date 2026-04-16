@@ -94,3 +94,5 @@ C:\Users\ead_dev\Documents\Gabriel_Almeida\LH_PET_WEB\obj\Debug\net9.0\refint\LH
 C:\Users\ead_dev\Documents\Gabriel_Almeida\LH_PET_WEB\obj\Debug\net9.0\LH_PET_WEB.pdb
 C:\Users\ead_dev\Documents\Gabriel_Almeida\LH_PET_WEB\obj\Debug\net9.0\LH_PET_WEB.genruntimeconfig.cache
 C:\Users\ead_dev\Documents\Gabriel_Almeida\LH_PET_WEB\obj\Debug\net9.0\ref\LH_PET_WEB.dll
+C:\Users\ead_dev\Documents\Gabriel_Almeida\LH_PET_WEB\obj\Debug\net9.0\LH_PET_WEB.csproj.AssemblyReference.cache
+C:\Users\ead_dev\Documents\Gabriel_Almeida\LH_PET_WEB\obj\Debug\net9.0\LH_PET_WEB.sourcelink.json
