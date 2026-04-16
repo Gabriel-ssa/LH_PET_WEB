@@ -22,7 +22,7 @@ namespace LH_PET_WEB.Models.ViewModels
 
         [Required(ErrorMessage = "O CPF é obrigatório.")]
         [Cpf(ErrorMessage = "O CPF informado é matematicamente inválido.")]
-        public string Cpf { get; set; } = string.Empty;
+        public string CPF { get; set; } = string.Empty;
 
         [Required(ErrorMessage = "O Telefone é obrigatório.")]
         [RegularExpression(@"^\(?\d{2}\)?[\s-]?\d{4,5}-?\d{4}$", ErrorMessage = "Formato de telefone inválido.")]
@@ -57,7 +57,7 @@ namespace LH_PET_WEB.Models.ViewModels
 
         public string Tipo { get; set; } = string.Empty;
     }
-    public class ApiperfilUpdateDTO
+    public class ApiPerfilUpdateDTO
     {
         [Required]
         [MinLength(3)]
