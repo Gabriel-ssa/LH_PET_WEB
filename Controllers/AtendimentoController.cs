@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using LH_PET_WEB.Data;
 using LH_PET_WEB.Models;
-using System.ComponentModel.Design;
+
 
 namespace LH_PET_WEB.Controllers
 {
@@ -18,21 +18,21 @@ namespace LH_PET_WEB.Controllers
         }
         public async Task<IActionResult> Index()
         {
-            var atendimentos = await _contexto.Atendimentos
+            var agendamentos = await _contexto.Agendamento
                 .Include(a => a.Pet)
                 .ThenInclude(p => p!.Cliente)
                 .OrderByDescending(a => a.DataHora)
                 .ToListAsync();
-            return View(atendimentos);
+            return View(agendamentos);
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> AtualizarStatus(int id, string novoStatus)
         {
-            var agendamento = await _contexto.Agendamentos.FindAsync(id);
+            var agendamento = await _contexto.Agendamento.FindAsync(id);
             if (agendamento != null) {
                 agendamento.Status = novoStatus;
-                _contexto.Agendamentos.Update(agendamento);
+                _contexto.Agendamento.Update(agendamento);
                 await _contexto.SaveChangesAsync();
                 TempData["Sucesso"] = $"Status atualizado para {novoStatus}";
             }
@@ -44,12 +44,12 @@ namespace LH_PET_WEB.Controllers
         [HttpGet]
         public async Task<IActionResult> Prontuario(int agendamentoId)
         {
-            var agendamentos = await _contexto.Agendamentos
+            var agendamento = await _contexto.Agendamento
                 .Include(a => a.Pet)
                 .FirstOrDefaultAsync(a => a.Id == agendamentoId);
-            if (agendamentos == null) return NotFound();
+            if (agendamento == null) return NotFound();
             
-            var atendimentoExistente = await _contexto.Atendimentos
+            var atendimentoExistente = await _contexto.Atendimento
                 .FirstOrDefaultAsync(a => a.AgendamentoId == agendamentoId);
             if (atendimentoExistente != null)
             {
@@ -67,16 +67,16 @@ namespace LH_PET_WEB.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> SalvarProntuario(Atendimento model)
         {
-            Model.State.Remove("Agendamento");
+            ModelState.Remove("Agendamento");
             if (!ModelState.IsValid)
             {
-                _contexto.Atendimentos.Add(model);
+                _contexto.Atendimento.Add(model);
 
-                var agendamento = await _contexto.Agendamentos.FindAsync(model.AgendamentoId);
+                var agendamento = await _contexto.Agendamento.FindAsync(model.AgendamentoId);
                  if (agendamento != null)
                  {
                      agendamento.Status = "Concluído";
-                     _contexto.Agendamentos.Update(agendamento);
+                     _contexto.Agendamento.Update(agendamento);
                  }
                 await _contexto.SaveChangesAsync();
             TempData["Sucesso"] = "Prontuário salvo e atendimento concluído com sucesso!";
@@ -87,7 +87,7 @@ namespace LH_PET_WEB.Controllers
         [HttpGet]
         public async Task<IActionResult> Historico(string pesquisa)
         {
-            var query = _contexto.Atendimentos
+            var query = _contexto.Atendimento
                 .Include(a => a.Agendamento)
                 .ThenInclude(ag => ag!.Pet)
                 .ThenInclude(p => p!.Cliente)
@@ -118,13 +118,13 @@ namespace LH_PET_WEB.Controllers
             if (!ModelState.IsValid)
             {
                 model.Status = "Pendente";
-                var existeAgendamento = await _contexto.Agendamentos.AnyAsync(a => a.DataHora == model.DataHora && a.Status != "Cancelado");
+                var existeAgendamento = await _contexto.Agendamento.AnyAsync(a => a.DataHora == model.DataHora && a.Status != "Cancelado");
                 if (existeAgendamento)
                 {
                     TempData["Erro"] = "Já existe um agendamento marcadopara esse horário exato.";
                     return RedirectToAction(nameof(NovoAgendamento));
                 }
-                _contexto.Agendamentos.Add(model);
+                _contexto.Agendamento.Add(model);
                 await _contexto.SaveChangesAsync();
                 TempData["Sucesso"] = "Agendamento manual criado com sucesso!";
                 return RedirectToAction(nameof(Index));

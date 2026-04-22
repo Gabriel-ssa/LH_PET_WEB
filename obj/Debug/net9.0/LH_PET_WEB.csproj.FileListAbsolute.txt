@@ -94,3 +94,17 @@ C:\Users\ead_dev\Documents\Gabriel_Almeida\LH_PET_WEB\obj\Debug\net9.0\refint\LH
 C:\Users\ead_dev\Documents\Gabriel_Almeida\LH_PET_WEB\obj\Debug\net9.0\LH_PET_WEB.pdb
 C:\Users\ead_dev\Documents\Gabriel_Almeida\LH_PET_WEB\obj\Debug\net9.0\LH_PET_WEB.genruntimeconfig.cache
 C:\Users\ead_dev\Documents\Gabriel_Almeida\LH_PET_WEB\obj\Debug\net9.0\ref\LH_PET_WEB.dll
+C:\Users\ead_dev\Documents\Gabriel_Almeida\LH_PET_WEB\obj\Debug\net9.0\LH_PET_WEB.csproj.AssemblyReference.cache
+C:\Users\ead_dev\Documents\Gabriel_Almeida\LH_PET_WEB\obj\Debug\net9.0\LH_PET_WEB.sourcelink.json
+C:\Users\User\OneDrive - SESISENAISP - Escolas\Gabriel_Almeida\LH_PET_WEB\obj\Debug\net9.0\LH_PET_WEB.csproj.AssemblyReference.cache
+C:\Users\User\OneDrive - SESISENAISP - Escolas\Gabriel_Almeida\LH_PET_WEB\obj\Debug\net9.0\LH_PET_WEB.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\User\OneDrive - SESISENAISP - Escolas\Gabriel_Almeida\LH_PET_WEB\obj\Debug\net9.0\LH_PET_WEB.AssemblyInfoInputs.cache
+C:\Users\User\OneDrive - SESISENAISP - Escolas\Gabriel_Almeida\LH_PET_WEB\obj\Debug\net9.0\LH_PET_WEB.AssemblyInfo.cs
+C:\Users\User\OneDrive - SESISENAISP - Escolas\Gabriel_Almeida\LH_PET_WEB\obj\Debug\net9.0\LH_PET_WEB.csproj.CoreCompileInputs.cache
+C:\Users\User\OneDrive - SESISENAISP - Escolas\Gabriel_Almeida\LH_PET_WEB\obj\Debug\net9.0\LH_PET_WEB.MvcApplicationPartsAssemblyInfo.cache
+C:\Users\User\OneDrive - SESISENAISP - Escolas\Gabriel_Almeida\LH_PET_WEB\obj\Debug\net9.0\LH_PET_WEB.RazorAssemblyInfo.cache
+C:\Users\User\OneDrive - SESISENAISP - Escolas\Gabriel_Almeida\LH_PET_WEB\obj\Debug\net9.0\LH_PET_WEB.RazorAssemblyInfo.cs
+C:\Users\User\OneDrive - SESISENAISP - Escolas\Gabriel_Almeida\LH_PET_WEB\obj\Debug\net9.0\LH_PET_WEB.sourcelink.json
+C:\Users\User\OneDrive - SESISENAISP - Escolas\Gabriel_Almeida\LH_PET_WEB\obj\Debug\net9.0\LH_PET_WEB.dll
+C:\Users\User\OneDrive - SESISENAISP - Escolas\Gabriel_Almeida\LH_PET_WEB\obj\Debug\net9.0\refint\LH_PET_WEB.dll
+C:\Users\User\OneDrive - SESISENAISP - Escolas\Gabriel_Almeida\LH_PET_WEB\obj\Debug\net9.0\LH_PET_WEB.pdb

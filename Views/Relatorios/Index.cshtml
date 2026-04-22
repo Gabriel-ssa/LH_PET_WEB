@@ -1,0 +1,111 @@
+@model LH_PET_WEB.Models.ViewModels.RelatorioDashboardViewModel
+@{
+    ViewData["Title"] = "Dashboard Financeiro";
+    string mesAtual = DateTime.Now.ToString("MMMM").ToUpper();
+}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2 class="fw-bold text-dark"><i class="fa-solid fa-chart-line text-success me-2"></i> Resultados de @mesAtual</h2>
+    <button class="btn btn-outline-secondary rounded-pill" onclick="window.print()">
+        <i class="fa-solid fa-print me-1"></i> Imprimir Relatório
+    </button>
+</div>
+
+<div class="row g-4 mb-4">
+    <div class="col-md-4">
+        <div class="card card-premium p-4 border-0 shadow-sm bg-primary text-white h-100">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h6 class="fw-bold mb-0">ENTRADAS DE HOJE</h6>
+                <i class="fa-solid fa-calendar-day fs-3 opacity-50"></i>
+            </div>
+            <h2 class="fw-bold mb-0">R$ @Model.FaturamentoHoje.ToString("N2")</h2>
+        </div>
+    </div>
+    
+    <div class="col-md-4">
+        <div class="card card-premium p-4 border-0 shadow-sm bg-success text-white h-100">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h6 class="fw-bold mb-0">FATURAMENTO DO MÊS</h6>
+                <i class="fa-solid fa-sack-dollar fs-3 opacity-50"></i>
+            </div>
+            <h2 class="fw-bold mb-0">R$ @Model.FaturamentoMes.ToString("N2")</h2>
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <div class="card card-premium p-4 border-0 shadow-sm bg-dark text-white h-100">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h6 class="fw-bold mb-0">TOTAL DE VENDAS (MÊS)</h6>
+                <i class="fa-solid fa-receipt fs-3 opacity-50"></i>
+            </div>
+            <h2 class="fw-bold mb-0">@Model.QuantidadeVendasMes <span class="fs-6 fw-normal">cupons emitidos</span></h2>
+        </div>
+    </div>
+</div>
+
+<div class="row g-4">
+    <div class="col-md-7">
+        <div class="card card-premium border-0 shadow-sm h-100">
+            <div class="card-header bg-white p-3 border-bottom text-primary fw-bold">
+                <i class="fa-solid fa-trophy text-warning me-2"></i> Top 5 Produtos Mais Vendidos
+            </div>
+            <div class="card-body p-0">
+                <table class="table table-hover align-middle mb-0">
+                    <thead class="bg-light text-secondary small">
+                        <tr>
+                            <th class="ps-4 py-3">Produto</th>
+                            <th class="py-3 text-center">Unidades</th>
+                            <th class="py-3 text-end pe-4">Total Gerado</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.ProdutosMaisVendidos)
+                        {
+                            <tr>
+                                <td class="ps-4 py-3 fw-bold text-dark">@item.NomeProduto</td>
+                                <td class="py-3 text-center"><span class="badge bg-secondary rounded-pill">@item.QuantidadeVendida</span></td>
+                                <td class="py-3 text-end pe-4 text-success fw-bold">R$ @item.ValorTotalGerado.ToString("N2")</td>
+                            </tr>
+                        }
+                        @if (!Model.ProdutosMaisVendidos.Any())
+                        {
+                            <tr><td colspan="3" class="text-center py-4 text-muted">Ainda não há vendas registradas neste mês.</td></tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-5">
+        <div class="card card-premium border-0 shadow-sm h-100">
+            <div class="card-header bg-white p-3 border-bottom text-primary fw-bold">
+                <i class="fa-solid fa-wallet text-secondary me-2"></i> Receitas por Pagamento
+            </div>
+            <div class="card-body">
+                <ul class="list-group list-group-flush">
+                    @foreach (var pagamento in Model.FaturamentoPorPagamento)
+                    {
+                        var porcentagem = Model.FaturamentoMes > 0 
+                                            ? (pagamento.Value / Model.FaturamentoMes) * 100 
+                                            : 0;
+                        
+                        <li class="list-group-item px-0 py-3 border-0">
+                            <div class="d-flex justify-content-between mb-1">
+                                <span class="fw-bold text-secondary">@pagamento.Key.Replace("_", " ")</span>
+                                <span class="fw-bold text-dark">R$ @pagamento.Value.ToString("N2")</span>
+                            </div>
+                            <div class="progress" style="height: 8px;">
+                                <div class="progress-bar bg-info" role="progressbar" style="width: @porcentagem.ToString("0", System.Globalization.CultureInfo.InvariantCulture)%;"></div>
+                            </div>
+                        </li>
+                    }
+                    @if (!Model.FaturamentoPorPagamento.Any())
+                    {
+                        <li class="list-group-item px-0 text-center text-muted border-0 mt-4">Nenhum pagamento recebido.</li>
+                    }
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>

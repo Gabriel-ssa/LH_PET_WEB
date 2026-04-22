@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portal do Cliente - VetPlus Care</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <style>
+        body { background-color: #f4f7f6; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        .bg-gradient-primary { background: linear-gradient(135deg, #0d6efd, #0a58ca); }
+        .card-spa { border: none; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.08); }
+        .hidden { display: none !important; }
+        .progress { height: 6px; border-radius: 3px; background-color: #e9ecef; }
+        .btn-acao-pet { padding: 0.2rem 0.5rem; font-size: 0.8rem; }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar navbar-dark bg-gradient-primary mb-4 shadow-sm">
+        <div class="container">
+            <a class="navbar-brand fw-bold" href="#"><i class="fa-solid fa-paw me-2"></i>Portal do Tutor</a>
+            <button id="btnSair" class="btn btn-outline-light btn-sm hidden" onclick="fazerLogout()"><i class="fa-solid fa-right-from-bracket"></i> Sair</button>
+        </div>
+    </nav>
+
+    <div class="container pb-5">
+        <div id="areaAuth" class="row justify-content-center">
+            <div class="col-md-6 col-lg-5">
+                <div class="card card-spa p-4 mb-4">
+                    <h4 class="text-center fw-bold mb-4">Acesso ao Portal</h4>
+                    <div id="msgAuth" class="alert hidden"></div>
+                    
+                    <form id="formLogin" onsubmit="fazerLogin(event)">
+                        <div class="mb-3">
+                            <label class="form-label">E-mail</label>
+                            <input type="email" id="loginEmail" class="form-control" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Senha</label>
+                            <input type="password" id="loginSenha" class="form-control" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary w-100 fw-bold rounded-pill">Entrar</button>
+                    </form>
+                    
+                    <hr class="my-4">
+                    <p class="text-center mb-0">Novo por aqui? <a href="#" onclick="toggleForms(event)" class="text-decoration-none fw-bold">Criar uma conta</a></p>
+                </div>
+
+                <div class="card card-spa p-4 hidden" id="cardRegistro">
+                    <h4 class="text-center fw-bold mb-4">Criar Conta</h4>
+                    <form id="formRegistro" onsubmit="fazerRegistro(event)">
+                        <div class="mb-3">
+                            <input type="text" id="regNome" class="form-control" placeholder="Nome Completo" required>
+                        </div>
+                        <div class="mb-3">
+                            <input type="text" id="regCpf" class="form-control" placeholder="CPF" maxlength="14" oninput="mascaraCpf(this)" required>
+                        </div>
+                        <div class="mb-3">
+                            <input type="text" id="regTelefone" class="form-control" placeholder="Celular" maxlength="15" oninput="mascaraTelefone(this)" required>
+                        </div>
+                        <div class="mb-3">
+                            <input type="email" id="regEmail" class="form-control" placeholder="E-mail" required>
+                        </div>
+                        <div class="mb-3">
+                            <input type="password" id="regSenha" class="form-control" placeholder="Criar Senha" oninput="avaliarForcaSenha(this.value)" required>
+                            <div class="progress mt-2">
+                                <div id="barraForca" class="progress-bar" role="progressbar" style="width: 0%;"></div>
+                            </div>
+                            <div class="d-flex justify-content-between mt-1">
+                                <span class="form-text small text-muted"><i class="fa-solid fa-shield-halved"></i> Mínimo 8 caracteres (A, a, 1, @)</span>
+                                <span id="textoForca" class="small fw-bold text-muted"></span>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-success w-100 fw-bold rounded-pill mt-2">Registrar Conta</button>
+                    </form>
+                    <div class="text-center mt-3"><a href="#" onclick="toggleForms(event)" class="text-secondary small">Voltar ao Login</a></div>
+                </div>
+            </div>
+        </div>
+
+        <div id="areaLogada" class="hidden">
+            <div class="alert alert-primary card-spa border-0 mb-4 d-flex justify-content-between align-items-center">
+                <h5 class="mb-0"><i class="fa-solid fa-user me-2"></i> Olá, <span id="lblNomeCliente" class="fw-bold">Carregando...</span>!</h5>
+                <button class="btn btn-sm btn-outline-primary rounded-pill bg-white fw-bold" onclick="abrirModalPerfil()">
+                    <i class="fa-solid fa-pen me-1"></i> Editar Perfil
+                </button>
+            </div>
+
+            <div class="row">
+                <div class="col-md-5 mb-4">
+                    <div class="card card-spa h-100">
+                        <div class="card-header bg-white fw-bold py-3">
+                            <i class="fa-solid fa-dog text-primary me-2"></i> Meus Pets
+                        </div>
+                        <div class="card-body">
+                            <ul id="listaPets" class="list-group list-group-flush mb-4"></ul>
+                            
+                            <h6 class="fw-bold text-muted small text-uppercase">Adicionar Novo Pet</h6>
+                            <form id="formPet" onsubmit="adicionarPet(event)">
+                                <div class="row g-2 mb-2">
+                                    <div class="col-7"><input type="text" id="petNome" class="form-control form-control-sm" placeholder="Nome do Pet" required></div>
+                                    <div class="col-5"><input type="date" id="petNascimento" class="form-control form-control-sm" required title="Data de Nascimento"></div>
+                                </div>
+                                <div class="row g-2 mb-2">
+                                    <div class="col-6">
+                                        <select id="petEspecie" class="form-select form-select-sm" onchange="atualizarRacas('petEspecie', 'petRaca')" required>
+                                            <option value="">Espécie...</option>
+                                            <option value="Cachorro">Cachorro</option>
+                                            <option value="Gato">Gato</option>
+                                            <option value="Ave">Ave</option>
+                                            <option value="Roedor">Roedor</option>
+                                            <option value="Exótico">Exótico / Outro</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-6">
+                                        <select id="petRaca" class="form-select form-select-sm" required>
+                                            <option value="">Selecione Espécie...</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <button type="submit" class="btn btn-sm btn-outline-primary w-100 rounded-pill mt-2"><i class="fa-solid fa-plus"></i> Salvar Pet</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-7 mb-4">
+                    <div class="card card-spa h-100">
+                        <div class="card-header bg-white fw-bold py-3">
+                            <i class="fa-regular fa-calendar-plus text-success me-2"></i> Agendar Serviço
+                        </div>
+                        <div class="card-body">
+                            <div id="msgAgenda" class="alert hidden py-2 small"></div>
+                            <form id="formAgenda" onsubmit="criarAgendamento(event)" class="mb-4 bg-light p-3 rounded">
+                                <div class="row g-3">
+                                    <div class="col-md-6">
+                                        <label class="form-label small fw-bold">Selecione o Pet</label>
+                                        <select id="agendaPetId" class="form-select form-select-sm" required>
+                                            <option value="">Carregando pets...</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="form-label small fw-bold">Tipo de Serviço</label>
+                                        <select id="agendaTipo" class="form-select form-select-sm" required>
+                                            <option value="">Escolha...</option>
+                                            <option value="Consulta">Consulta Veterinária</option>
+                                            <option value="Banho">Banho</option>
+                                            <option value="Tosa">Tosa Completa</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="form-label small fw-bold">Data</label>
+                                        <input type="date" id="agendaData" class="form-control form-control-sm" onchange="buscarHorariosLivres()" required>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="form-label small fw-bold">Horário Disponível</label>
+                                        <select id="agendaHora" class="form-select form-select-sm" required disabled>
+                                            <option value="">Escolha uma data antes...</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <button type="submit" id="btnAgendar" class="btn btn-success btn-sm w-100 mt-3 rounded-pill fw-bold" disabled>Confirmar Agendamento</button>
+                            </form>
+
+                            <h6 class="fw-bold text-muted small text-uppercase mb-3"><i class="fa-solid fa-history me-1"></i> Histórico de Agendamentos</h6>
+                            <div class="table-responsive">
+                                <table class="table table-sm table-hover text-center" style="font-size: 0.9rem;">
+                                    <thead class="table-light">
+                                        <tr>
+                                            <th>Data e Hora</th>
+                                            <th>Pet</th>
+                                            <th>Serviço</th>
+                                            <th>Status</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="listaAgendamentos"></tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="modalPerfil" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content border-0 shadow">
+                <div class="modal-header bg-primary text-white">
+                    <h5 class="modal-title fw-bold"><i class="fa-solid fa-user-pen me-2"></i> Editar Meu Perfil</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <form id="formPerfil" onsubmit="salvarPerfil(event)">
+                    <div class="modal-body">
+                        <div id="msgModalPerfil" class="alert hidden py-2 small"></div>
+                        <div class="mb-3">
+                            <label class="form-label small fw-bold">Nome Completo</label>
+                            <input type="text" id="editNome" class="form-control" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label small fw-bold">Telefone / Celular</label>
+                            <input type="text" id="editTelefone" class="form-control" maxlength="15" oninput="mascaraTelefone(this)" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label small fw-bold">E-mail de Acesso</label>
+                            <input type="email" id="editEmail" class="form-control" required>
+                        </div>
+                    </div>
+                    <div class="modal-footer bg-light">
+                        <button type="button" class="btn btn-secondary rounded-pill" data-bs-dismiss="modal">Cancelar</button>
+                        <button type="submit" class="btn btn-primary rounded-pill fw-bold">Salvar Alterações</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="modalPet" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content border-0 shadow">
+                <div class="modal-header bg-info text-white">
+                    <h5 class="modal-title fw-bold"><i class="fa-solid fa-pen-to-square me-2"></i> Editar Pet</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <form id="formEditPet" onsubmit="salvarEdicaoPet(event)">
+                    <div class="modal-body">
+                        <div id="msgModalPet" class="alert hidden py-2 small"></div>
+                        <input type="hidden" id="editPetId">
+                        
+                        <div class="mb-3">
+                            <label class="form-label small fw-bold">Nome do Pet</label>
+                            <input type="text" id="editPetNome" class="form-control" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label small fw-bold">Data de Nascimento</label>
+                            <input type="date" id="editPetNascimento" class="form-control" required>
+                        </div>
+                        <div class="row g-2 mb-3">
+                            <div class="col-6">
+                                <label class="form-label small fw-bold">Espécie</label>
+                                <select id="editPetEspecie" class="form-select" onchange="atualizarRacas('editPetEspecie', 'editPetRaca')" required>
+                                    <option value="Cachorro">Cachorro</option>
+                                    <option value="Gato">Gato</option>
+                                    <option value="Ave">Ave</option>
+                                    <option value="Roedor">Roedor</option>
+                                    <option value="Exótico">Exótico / Outro</option>
+                                </select>
+                            </div>
+                            <div class="col-6">
+                                <label class="form-label small fw-bold">Raça</label>
+                                <select id="editPetRaca" class="form-select" required>
+                                    </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer bg-light">
+                        <button type="button" class="btn btn-secondary rounded-pill" data-bs-dismiss="modal">Cancelar</button>
+                        <button type="submit" class="btn btn-info text-white rounded-pill fw-bold">Atualizar Pet</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="/js/portal-cliente.js"></script>
+</body>
+</html>

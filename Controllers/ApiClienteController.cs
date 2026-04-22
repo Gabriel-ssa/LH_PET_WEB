@@ -1,12 +1,17 @@
-using Microsoft.AspNetCore.Authentication.JwtBearer; using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc; using Microsoft.EntityFrameworkCore; using System.Security.Claims;
-using LH_PET_WEB.Data; using LH_PET_WEB.Models;
+using Microsoft.AspNetCore.Authentication.JwtBearer; 
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc; 
+using Microsoft.EntityFrameworkCore; 
+using System.Security.Claims;
+using LH_PET_WEB.Data; 
+using LH_PET_WEB.Models;
 using LH_PET_WEB.Models.ViewModels;
 
 namespace LH_PET_WEB.Controllers
 {
     [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Cliente")]
-    [ApiController] [Route("api/cliente")]
+    [ApiController] 
+    [Route("api/cliente")]
     public class ApiClienteController : ControllerBase
     {
         private readonly ContextoBanco _contexto;
@@ -19,7 +24,7 @@ namespace LH_PET_WEB.Controllers
             var usuarioIdClaim = User.FindFirstValue(ClaimTypes.NameIdentifier);
             if (string.IsNullOrEmpty(usuarioIdClaim)) return null;
             int usuarioId = int.Parse(usuarioIdClaim);
-            return await _contexto.Clientes.FirstOrDefaultAsync(c=> c.UsuarioId == usuarioId);
+            return await _contexto.Cliente.FirstOrDefaultAsync(c=> c.UsuarioId == usuarioId);
         }
 
         [HttpGet("perfil")]
@@ -37,7 +42,7 @@ namespace LH_PET_WEB.Controllers
         }
 
         [HttpPut("perfil")]
-        public async Task<IActionResult> AtualizarPerfil([FromBody] ApiPerfilUpdateDTO dto)
+        public async Task<IActionResult> AtualizarPerfil ([FromBody]ApiPerfilUpdateDTO dto)
         {
             var cliente = await ObterClienteLogadoAsync(); 
             if (cliente == null) return Unauthorized();
@@ -51,8 +56,19 @@ namespace LH_PET_WEB.Controllers
                 if (emailEmUso) return BadRequest(new { mensagem = "Este e-mail já está em uso por outra conta." });
             }
 
-            await _contexto.SaveChangesAsync();
-            return Ok(new { mensagem = "Perfil atualizado com sucesso!" });
+            usuario.Nome = dto.Nome;
+            usuario.Email = dto.Email;
+            _contexto.Usuarios.Update(usuario);
+             
+             cliente.Nome = dto.Nome;
+             cliente.Telefone = dto.Telefone;
+             _contexto.Cliente.Update(cliente);
+             
+             await _contexto.SaveChangesAsync();
+             
+             return Ok(new { mensagem = "Perfil atualizado com sucesso!" });
+
+            
         }
 
         [HttpGet("pets")]
@@ -73,8 +89,8 @@ namespace LH_PET_WEB.Controllers
                 Idade = p.IdadeCalculada});
             return Ok(petsRetorno);
         }
-        [HttpsPost("pets")]
-        public async Task<iActionResult> AdicionarPet ([FromBody]ApiPetDTO dto)
+        [HttpPost("pets")]
+        public async Task<IActionResult> AdicionarPet ([FromBody]ApiPetDTO dto)
         {
             var cliente = await ObterClienteLogadoAsync(); 
             if (cliente == null) return Unauthorized();
@@ -118,7 +134,7 @@ namespace LH_PET_WEB.Controllers
             var pet = await _contexto.Pets.FirstOrDefaultAsync(p => p.Id == id && p.ClienteId == cliente.Id);
             if (pet == null) return NotFound(new { mensagem = "Pet não encontrado." });
             
-            var temAgendamentoPendente = await _contexto.Agendamentos.AnyAsync(a => a.PetId == pet.Id && a.Status == "Pendente");
+            var temAgendamentoPendente = await _contexto.Agendamento.AnyAsync(a => a.PetId == pet.Id && a.Status == "Pendente");
             if (temAgendamentoPendente) return BadRequest(new { mensagem = "Não é possível remover o pet, pois eele possui agendamentos pendentes." });
 
             _contexto.Pets.Remove(pet);
@@ -131,7 +147,7 @@ namespace LH_PET_WEB.Controllers
             var cliente = await ObterClienteLogadoAsync(); 
             if (cliente == null) return Unauthorized();
 
-            var agendamentos = await _contexto.Agendamentos
+            var agendamento = await _contexto.Agendamento
                 .Include(a => a.Pet)
                 .Where(a => a.Pet!.ClienteId == cliente.Id)
                 .OrderByDescending(a => a.DataHora)
@@ -144,7 +160,7 @@ namespace LH_PET_WEB.Controllers
                 })
                 .ToListAsync();
             
-            return Ok(agendamentosRetorno);
+            return Ok(agendamento);
         }
         [HttpPost("agendamentos")]
         public async Task<IActionResult> AgendarServico([FromBody] ApiAgendamentoDTO dto)
@@ -155,7 +171,7 @@ namespace LH_PET_WEB.Controllers
             var petPertenceAoCliente = await _contexto.Pets.AnyAsync(p => p.Id == dto.PetId && p.ClienteId == cliente.Id);
             if (!petPertenceAoCliente) return BadRequest(new { mensagem = "Pet inválido ou não pertence a você." });
 
-            var horarioOcupado = await _contexto.Agendamentos.AnyAsync(a => a.DataHora == dto.DataHora && a.Status == "Cancelado");
+            var horarioOcupado = await _contexto.Agendamento.AnyAsync(a => a.DataHora == dto.DataHora && a.Status == "Cancelado");
             if (horarioOcupado) return BadRequest(new { mensagem = "Esse horário já não está mais disponível." });
 
             var novoAgendamento = new Agendamento
@@ -165,7 +181,7 @@ namespace LH_PET_WEB.Controllers
                 Tipo = dto.Tipo,
                 Status = "Pendente"
             };
-            _contexto.Agendamentos.Add(novoAgendamento);
+            _contexto.Agendamento.Add(novoAgendamento);
             await _contexto.SaveChangesAsync();
             return Ok(new { mensagem = "Serviço agendado com sucesso!" });        
         }
@@ -186,7 +202,7 @@ namespace LH_PET_WEB.Controllers
             int minutosServico = tipo == "Consulta" ? config.MinutosConsulta : (tipo == "Banho" ? config.MinutosBanho :config.MinutosTosa);
             if (minutosServico <= 0) minutosServico = 30;
 
-            var agendamentosDoDia = await _contexto.Agendamentos
+            var agendamentosDoDia = await _contexto.Agendamento
                 .Where(a => a.DataHora.Date == dataEscolhida.Date && a.Status != "Cancelado")
                 .ToListAsync();
             
@@ -199,7 +215,7 @@ namespace LH_PET_WEB.Controllers
                 bool temConflito = agendamentosDoDia.Any(a =>
                 {
                    TimeSpan aInicio = a.DataHora.TimeOfDay;
-                   int aDuracao = a.Tipo == "Consulta" ? config.MinutosConsulta : (a.Tipo == "Banho" ? config.MinutosBanho : config.MinutosTosa); 
+                   int aDuracaoMin = a.Tipo == "Consulta" ? config.MinutosConsulta : (a.Tipo == "Banho" ? config.MinutosBanho : config.MinutosTosa); 
                      TimeSpan aFim = aInicio.Add(TimeSpan.FromMinutes(aDuracaoMin));
                     return (atual < aFim) && (fimAtual > aInicio);
                 });

@@ -1,0 +1,107 @@
+@model LH_PET_WEB.Models.Venda
+@{
+    ViewData["Title"] = $"Recibo #{Model.Id:D6}";
+}
+
+<style>
+    /* Estilos específicos para a impressão térmica e tela */
+    .recibo-container {
+        max-width: 400px;
+        margin: 0 auto;
+        background: #fff;
+        padding: 20px;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        font-family: 'Courier New', Courier, monospace;
+    }
+    .traco { border-bottom: 1px dashed #ccc; margin: 15px 0; }
+    
+    /* Oculta botões e menus na hora de imprimir o papel */
+    @@media print {
+        body * { visibility: hidden; }
+        .recibo-container, .recibo-container * { visibility: visible; }
+        .recibo-container { position: absolute; left: 0; top: 0; box-shadow: none; width: 100%; max-width: 80mm; padding: 0;}
+        .no-print { display: none !important; }
+    }
+</style>
+
+<div class="row">
+    <div class="col-12">
+        <div class="recibo-container text-dark mt-3">
+            <div class="text-center mb-3">
+                <h3 class="fw-bold mb-0">VETPLUS CARE</h3>
+                <small>Rua Exemplo, 123 - Centro</small><br/>
+                <small>CNPJ: 00.000.000/0001-00</small>
+            </div>
+            
+            <div class="traco"></div>
+            
+            <div class="small">
+                <strong>RECIBO NÃO-FISCAL Nº:</strong> @Model.Id.ToString("D6")<br/>
+                <strong>DATA:</strong> @Model.DataVenda.ToString("dd/MM/yyyy HH:mm:ss")<br/>
+                <strong>ATENDENTE:</strong> @Model.Usuario!.Nome<br/>
+            </div>
+
+            <div class="traco"></div>
+            
+            <table class="table table-sm table-borderless small mb-0">
+                <thead>
+                    <tr class="border-bottom border-dark">
+                        <th>QTD</th>
+                        <th>DESCRIÇÃO</th>
+                        <th class="text-end">TOTAL</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.Itens)
+                    {
+                        <tr>
+                            <td>@item.Quantidade</td>
+                            <td class="text-truncate" style="max-width: 150px;">@item.Produto!.Nome</td>
+                            <td class="text-end">R$ @((item.Quantidade * item.PrecoUnitario).ToString("N2"))</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+
+            <div class="traco"></div>
+
+            <div class="d-flex justify-content-between fw-bold fs-5">
+                <span>TOTAL:</span>
+                <span>R$ @Model.Total.ToString("N2")</span>
+            </div>
+            
+            <div class="d-flex justify-content-between small mt-2">
+                <span>PAGAMENTO:</span>
+                <span>@Model.FormaPagamento.ToUpper().Replace("_", " ")</span>
+            </div>
+
+            <div class="traco"></div>
+            
+            <div class="text-center small mt-4">
+                <p class="mb-0">Agradecemos a preferência!</p>
+                <p>Volte Sempre</p>
+                <p class="text-muted mt-3" style="font-size: 0.7rem;">Powered by VetPlus ERP System</p>
+            </div>
+        </div>
+
+        <div class="mt-4 max-w-400 mx-auto no-print text-center" style="max-width: 400px; margin: 0 auto;">
+            
+            <button onclick="window.print()" class="btn btn-dark w-100 fw-bold rounded-pill mb-3 shadow-sm py-2">
+                <i class="fa-solid fa-print me-2"></i> Imprimir Recibo
+            </button>
+
+            <div class="card bg-light border-0 shadow-sm p-3 text-start">
+                <h6 class="fw-bold text-primary mb-3"><i class="fa-solid fa-envelope me-2"></i> Enviar Digital</h6>
+                <form asp-action="EnviarPorEmail" method="post">
+                    <input type="hidden" name="id" value="@Model.Id" />
+                    <div class="input-group">
+                        <input type="email" name="emailCliente" class="form-control" placeholder="E-mail do cliente" required />
+                        <button type="submit" class="btn btn-primary fw-bold"><i class="fa-solid fa-paper-plane"></i></button>
+                    </div>
+                </form>
+            </div>
+
+            <a asp-action="Historico" class="btn btn-link text-secondary mt-3"><i class="fa-solid fa-arrow-left me-1"></i> Voltar ao Histórico</a>
+        </div>
+    </div>
+</div>

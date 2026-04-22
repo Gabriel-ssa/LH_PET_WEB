@@ -13,17 +13,17 @@ namespace LH_PET_WEB.Controllers
     [Authorize]
     public class ConfiguracaoController : Controller
     {
-        private readonly ContextoBanco contexto;
+        private readonly ContextoBanco _contexto;
 
         public ConfiguracaoController(ContextoBanco contexto)
         {
-            contexto = contexto;
+            _contexto = contexto;
         }
         [HttpGet]
         public async Task<IActionResult> Index()
         {
-            var configuracao = await contexto.Configuracoes.FirstOrDefaultAsync(c => c.Id == 1);
-            if (configuracao == null)
+            var config = await _contexto.Configuracoes.FirstOrDefaultAsync(c => c.Id == 1);
+            if (config == null)
             {
                 config = new ConfiguracaoClinica();
             }  
@@ -39,7 +39,7 @@ namespace LH_PET_WEB.Controllers
 
             if (!ModelState.IsValid)
             {
-                var configExistente = await contexto.Configuracoes.FirstOrDefaultAsync(c => c.Id == 1);
+                var configExistente = await _contexto.Configuracoes.FirstOrDefaultAsync(c => c.Id == 1);
 
                 if (configExistente != null)
                 {
@@ -50,7 +50,7 @@ namespace LH_PET_WEB.Controllers
                     configExistente.MinutosBanho = model.MinutosBanho;
                     configExistente.MinutosTosa = model.MinutosTosa;
 
-                    contexto.Configuracoes.Update(configExistente);
+                    _contexto.Configuracoes.Update(configExistente);
                 }
                 else
                 {
@@ -58,7 +58,7 @@ namespace LH_PET_WEB.Controllers
                     _contexto.Configuracoes.Add(model);
                 }
                 
-                await contexto.SaveChangesAsync();
+                await _contexto.SaveChangesAsync();
                 TempData["Sucesso"] = "Configurações da agenda atualizadas com sucesso!";
                 return RedirectToAction(nameof(Index));
             }

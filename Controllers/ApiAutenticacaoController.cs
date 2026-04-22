@@ -1,8 +1,9 @@
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
+using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
+using System.Text;
 using LH_PET_WEB.Data;
 using LH_PET_WEB.Models;
 using LH_PET_WEB.Models.ViewModels;
@@ -29,9 +30,9 @@ namespace LH_PET_WEB.Controllers
 
             try
             {
-                var usuarioExiste = await _contexto.Usuarios.AnyAsync(c => c.Email == dto.Email);
+                var usuarioExiste = await _contexto.Usuarios.AnyAsync(u => u.Email == dto.Email);
                     if (usuarioExiste) return BadRequest(new { mensagem = "E-mail já está em uso."});
-                var cpfExiste = await _contexto.Usuarios.AnyAsync(u => u.CPF == dto.CPF);
+                var cpfExiste = await _contexto.Cliente.AnyAsync(c => c.Cpf == dto.CPF);
                     if (cpfExiste) return BadRequest(new { mensagem = "CPF já cadastrado."});
                 // 1. Cria o Usuário de acesso(agora passando o nome obrigatório)
                 var novoUsuario = new Usuario
@@ -53,7 +54,7 @@ namespace LH_PET_WEB.Controllers
                     Cpf = dto.CPF,
                     Telefone = dto.Telefone,
                 };
-                _contexto.Clientes.Add(novoCliente);
+                _contexto.Cliente.Add(novoCliente);
                 await _contexto.SaveChangesAsync();
                 
                 return Ok(new {mensagem = "Conta criada com sucesso!"});

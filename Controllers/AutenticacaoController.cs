@@ -11,20 +11,20 @@ namespace LH_PET_WEB.Controllers
 {
     public class AutenticacaoController : Controller
     {
-        private readonly ContextoBanco contexto;
-        private readonly IEmailService emailService;
+        private readonly ContextoBanco _contexto;
+        private readonly IEmailService _emailService;
 
-        public AutenticacaoController(ContextoBanco contexto, IProblemDetailsService emailService)
+        public AutenticacaoController(ContextoBanco contexto, IEmailService emailService)
         {
-            contexto = contexto;
-            emailService = emailService;
+            _contexto = contexto;
+            _emailService = emailService;
         }
 
         [HttpGet]
         public IActionResult Login()
         {
             if (User.Identity is {IsAuthenticated: true}) return RedirectToAction("Index","Painel");
-            Return View(new LoginViewModel());
+            return View(new LoginViewModel());
         }
 
         [HttpPost]
@@ -33,7 +33,7 @@ namespace LH_PET_WEB.Controllers
         {
             if (!ModelState.IsValid) return View(model);
 
-            var usuario = await contexto.Usuarios.FirstOrDefaultAsync(u => u.Email == model.Email);
+            var usuario = await _contexto.Usuarios.FirstOrDefaultAsync(u => u.Email == model.Email);
             if (usuario == null || !BCrypt.Net.BCrypt.Verify(model.Senha, usuario.SenhaHash))
             {
                 TempData["Erro"] = "Email ou senha inválidos.";
@@ -46,7 +46,7 @@ namespace LH_PET_WEB.Controllers
                 return View(model);
             }
 
-            if (usuario.SenhaTemporario)
+            if (usuario.SenhaTemporaria)
             {
                 TempData["ResetUsuarioId"] = usuario.Id;
                 TempData["AvisoTemporario"] = "Sua senha é temporária. Por favor, defina uma nova senha segura para continuar.";
@@ -76,14 +76,14 @@ namespace LH_PET_WEB.Controllers
             }
 
             int usuarioId = (int)TempData["ResetUsuarioId"];
-            var usuario = await contexto.Usuarios.FindAsync(usuarioId);
+            var usuario = await _contexto.Usuarios.FindAsync(usuarioId);
 
             if (usuario != null)
             {
                 usuario.SenhaHash = BCrypt.Net.BCrypt.HashPassword(model.NovaSenha);
-                usuario.SenhaTemporario = false;
-                contexto.Usuarios.Update(usuario);
-                await contexto.SaveChangesAsync();
+                usuario.SenhaTemporaria = false;
+                _contexto.Usuarios.Update(usuario);
+                await _contexto.SaveChangesAsync();
 
                 await FazerloginNoCookie(usuario.Id, usuario.Nome, usuario.Email, usuario.Perfil);
                 TempData["Sucesso"] = "Senha redefinida com sucesso! Bem-vindo(a).";
@@ -125,19 +125,19 @@ namespace LH_PET_WEB.Controllers
         {
             if (!ModelState.IsValid) return View(model);
 
-            var usuario = await contexto.Usuarios.FirstOrDefaultAsync(u => u.Email == model.Email);
+            var usuario = await _contexto.Usuarios.FirstOrDefaultAsync(u => u.Email == model.Email);
             if (usuario != null)
             {
                 string senhaTemporaria = Guid.NewGuid().ToString().Substring(0, 8); // Gera uma senha temporária de 8 caracteres
                 usuario.SenhaHash = BCrypt.Net.BCrypt.HashPassword(senhaTemporaria);
-                usuario.SenhaTemporario = true;
+                usuario.SenhaTemporaria = true;
 
-                contexto.Usuarios.Update(usuario);
-                await contexto.SaveChangesAsync();
+                _contexto.Usuarios.Update(usuario);
+                await _contexto.SaveChangesAsync();
 
                 string mensagem = $"Olá {usuario.Nome}!\n\nUma redefinição de senha foi solicitada. \nSua nova senha temporaria é {senhaTemporaria}\n\nVocê será solicitado a alterá-la no próximo acesso.";
 
-                bool emailEnviado = await emailService.EnviarEmailAsync(usuario.Email, "Recuperação de Senha - VetPlus Care", mensagem);
+                bool emailEnviado = await _emailService.EnviarEmailAsync(usuario.Email, "Recuperação de Senha - VetPlus Care", mensagem);
                 if (emailEnviado)
                 {
                     TempData["Erro"] = "Serviço de e-mail indisponível. Contate o suporte para redefinir sua senha.";

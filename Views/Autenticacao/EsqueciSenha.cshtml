@@ -1,0 +1,41 @@
+@model LH_PET_WEB.Models.ViewModels.EsqueciSenhaViewModel
+@{
+    ViewData["Title"] = "Recuperar Senha";
+}
+
+<div class="auth-wrapper">
+    <div class="col-md-5 col-lg-4">
+        <div class="card card-premium p-4">
+            <div class="text-center mb-4">
+                <div class="bg-warning text-white rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 70px; height: 70px; font-size: 30px;">
+                    <i class="fa-solid fa-key"></i>
+                </div>
+                <h4 class="fw-bold">Recuperar Senha</h4>
+                <p class="text-muted small">Enviaremos uma senha temporária para o seu e-mail cadastrado.</p>
+            </div>
+
+            <form asp-action="EsqueciSenha" method="post">
+                <div class="mb-4">
+                    <label asp-for="Email" class="form-label fw-semibold">E-mail Cadastrado</label>
+                    <div class="input-group">
+                        <span class="input-group-text bg-white border-end-0 text-muted"><i class="fa-solid fa-at"></i></span>
+                        <input asp-for="Email" class="form-control form-control-premium border-start-0" placeholder="seu@email.com" autofocus />
+                    </div>
+                    <span asp-validation-for="Email" class="text-danger small"></span>
+                </div>
+
+                <button type="submit" class="btn btn-warning w-100 fw-bold text-white mb-3" style="border-radius: 10px;">
+                    <i class="fa-solid fa-paper-plane me-2"></i> Enviar Instruções
+                </button>
+
+                <div class="text-center">
+                    <a asp-action="Login" class="text-decoration-none text-secondary small fw-semibold"><i class="fa-solid fa-arrow-left me-1"></i> Voltar ao Login</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

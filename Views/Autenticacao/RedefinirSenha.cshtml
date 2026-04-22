@@ -1,0 +1,56 @@
+@model LH_PET_WEB.Models.ViewModels.RedefinirSenhaViewModel
+@{
+    ViewData["Title"] = "Redefinir Senha";
+}
+
+<div class="auth-wrapper">
+    <div class="col-md-5 col-lg-4">
+        <div class="card card-premium p-4 border-warning border-top border-4">
+            <div class="text-center mb-4">
+                <div class="bg-warning text-white rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 70px; height: 70px; font-size: 30px;">
+                    <i class="fa-solid fa-key"></i>
+                </div>
+                <h4 class="fw-bold">Primeiro Acesso</h4>
+                <p class="text-muted small">@TempData["AvisoTemporario"]</p>
+            </div>
+
+            <form asp-action="RedefinirSenha" method="post">
+                <div class="mb-3">
+                    <label asp-for="NovaSenha" class="form-label fw-semibold">Nova Senha</label>
+                    <div class="input-group">
+                        <span class="input-group-text bg-white border-end-0 text-muted"><i class="fa-solid fa-lock"></i></span>
+                        <input asp-for="NovaSenha" type="password" class="form-control form-control-premium border-start-0" placeholder="••••••••" id="novaSenhaFunc" oninput="avaliarForcaSenhaFunc(this.value)" autofocus />
+                    </div>
+                    <span asp-validation-for="NovaSenha" class="text-danger small"></span>
+                    
+                    <div class="progress mt-2" style="height: 6px;">
+                        <div id="barraForcaFunc" class="progress-bar" role="progressbar" style="width: 0%;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                    </div>
+                    <div class="d-flex justify-content-between mt-1">
+                        <span class="form-text small text-muted">Mínimo 8 caracteres, números e símbolos</span>
+                        <span id="textoForcaFunc" class="small fw-bold text-muted"></span>
+                    </div>
+                </div>
+
+                <div class="mb-4">
+                    <label asp-for="ConfirmarSenha" class="form-label fw-semibold">Confirmar Nova Senha</label>
+                    <div class="input-group">
+                        <span class="input-group-text bg-white border-end-0 text-muted"><i class="fa-solid fa-lock"></i></span>
+                        <input asp-for="ConfirmarSenha" type="password" class="form-control form-control-premium border-start-0" placeholder="••••••••" />
+                    </div>
+                    <span asp-validation-for="ConfirmarSenha" class="text-danger small"></span>
+                </div>
+
+                <button type="submit" class="btn btn-warning w-100 fw-bold text-dark mb-3">
+                    <i class="fa-solid fa-floppy-disk me-2"></i> Salvar e Acessar
+                </button>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    
+    <script src="~/js/redefinir-senha.js" asp-append-version="true"></script>
+}
