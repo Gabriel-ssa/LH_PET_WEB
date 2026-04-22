@@ -41,6 +41,6 @@ namespace LH_PET_WEB.Models.ViewModels
 
         [Required(ErrorMessage = "Confirme a nova senha.")]
         [Compare("NovaSenha", ErrorMessage = "As senhas não conferem.")]
-        public string ConfirmacaoSenha { get; set; } = string.Empty;
+        public string ConfirmarSenha { get; set; } = string.Empty;
     }
 }

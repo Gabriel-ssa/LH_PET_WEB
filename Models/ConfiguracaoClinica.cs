@@ -16,11 +16,11 @@ namespace LH_PET_WEB.Models
         
         [Required(ErrorMessage = "O Horário de Abertura é obrigatório.")]
         [Column("tm_abertura")]
-        public TimeSpan HorarioAbertura { get; set; }
+        public TimeSpan HoraAbertura { get; set; }
         
         [Required(ErrorMessage = "O horário de fechamento é obrigatório.")]
         [Column("tm_fechamento")]
-        public TimeSpan HorarioFechamento { get; set; }
+        public TimeSpan HoraFechamento { get; set; }
 
         [Column("ds_dias-trabalho")]
         public string DiasTrabalho { get; set; } = string.Empty;

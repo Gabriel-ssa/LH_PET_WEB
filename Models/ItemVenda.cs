@@ -17,10 +17,12 @@ namespace LH_PET_WEB.Models
         [Required]
         [Column("fk_venda")]
         public int VendaId { get; set; }
+        public Venda? Venda { get; set; }
         
         [Required]
         [Column("fk_produto")]
         public int ProdutoId { get; set; }
+        public Produto? Produto { get; set; }
         
         [Required]
         [Column("vl_quantidade")]

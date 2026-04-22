@@ -82,11 +82,7 @@ namespace LH_PET_WEB.Controllers
            var usuario = await _contexto.Usuarios.FindAsync(id);
             if (usuario == null) return NotFound();
 
-<<<<<<< HEAD
             var emailLogado = User.Claims.FirstOrDefault(c => c.Type == System.Security.Claims.ClaimTypes.Email)?.Value;
-=======
-            var emailLogado = User.Claims.FirstOrDefault(c => c.Type == System.Security.Claims.ClaimsTypes.Email)?.Value;
->>>>>>> 2cfbdbae417f3303a31065a259960f3d4ea7ea98
             if (usuario.Email == emailLogado)
             {
                 TempData["Erro"] = "Você não pode desativar sua própria conta.";

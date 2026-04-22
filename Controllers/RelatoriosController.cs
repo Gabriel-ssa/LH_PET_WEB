@@ -39,11 +39,7 @@ namespace LH_PET_WEB.Controllers
                 .GroupBy(v => v.FormaPagamento)
                 .ToDictionary(g => g.Key, g => g.Sum(v => v.Total));
             
-<<<<<<< HEAD
-            var topProdutos = await _contexto.ItemVenda
-=======
             var topProdutos = await _contexto.ItensVenda
->>>>>>> 2cfbdbae417f3303a31065a259960f3d4ea7ea98
                 .Include(i => i.Produto)
                 .Include(i => i.Venda)
                 .Where(i => i.Venda!.DataVenda >= inicioDoMes)
@@ -58,11 +54,7 @@ namespace LH_PET_WEB.Controllers
                 .Take(5)
                 .ToListAsync();
 
-<<<<<<< HEAD
             var viewModel = new RelatorioDashboardViewModel
-=======
-            var viewModel = new RelatorioViewModel
->>>>>>> 2cfbdbae417f3303a31065a259960f3d4ea7ea98
             {
                 FaturamentoHoje = vendasHoje.Sum(v => v.Total),
                 FaturamentoMes = vendasMes.Sum(v => v.Total),
