@@ -46,7 +46,11 @@ namespace LH_PET_WEB.Controllers
                 {
                     DataVenda = DateTime.Now,
                     FormaPagamento = request.FormaPagamento,
+<<<<<<< HEAD
                     UsuarioId = usuarioId,
+=======
+                    usuarioId = usuarioId,
+>>>>>>> 2cfbdbae417f3303a31065a259960f3d4ea7ea98
                     Total = 0    
                 };
 
@@ -74,7 +78,11 @@ namespace LH_PET_WEB.Controllers
                     };
 
                     totalVenda += (item.Quantidade * produtoBanco.Preco);
+<<<<<<< HEAD
                     _contexto.ItemVenda.Add(novoItem);
+=======
+                    _contexto.ItensVenda.Add(novoItem);
+>>>>>>> 2cfbdbae417f3303a31065a259960f3d4ea7ea98
                 }
                 novaVenda.Total = totalVenda;
                 _contexto.Vendas.Update(novaVenda);

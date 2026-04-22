@@ -96,6 +96,7 @@ C:\Users\ead_dev\Documents\Gabriel_Almeida\LH_PET_WEB\obj\Debug\net9.0\LH_PET_WE
 C:\Users\ead_dev\Documents\Gabriel_Almeida\LH_PET_WEB\obj\Debug\net9.0\ref\LH_PET_WEB.dll
 C:\Users\ead_dev\Documents\Gabriel_Almeida\LH_PET_WEB\obj\Debug\net9.0\LH_PET_WEB.csproj.AssemblyReference.cache
 C:\Users\ead_dev\Documents\Gabriel_Almeida\LH_PET_WEB\obj\Debug\net9.0\LH_PET_WEB.sourcelink.json
+<<<<<<< HEAD
 C:\Users\User\OneDrive - SESISENAISP - Escolas\Gabriel_Almeida\LH_PET_WEB\obj\Debug\net9.0\LH_PET_WEB.csproj.AssemblyReference.cache
 C:\Users\User\OneDrive - SESISENAISP - Escolas\Gabriel_Almeida\LH_PET_WEB\obj\Debug\net9.0\LH_PET_WEB.GeneratedMSBuildEditorConfig.editorconfig
 C:\Users\User\OneDrive - SESISENAISP - Escolas\Gabriel_Almeida\LH_PET_WEB\obj\Debug\net9.0\LH_PET_WEB.AssemblyInfoInputs.cache
@@ -108,3 +109,5 @@ C:\Users\User\OneDrive - SESISENAISP - Escolas\Gabriel_Almeida\LH_PET_WEB\obj\De
 C:\Users\User\OneDrive - SESISENAISP - Escolas\Gabriel_Almeida\LH_PET_WEB\obj\Debug\net9.0\LH_PET_WEB.dll
 C:\Users\User\OneDrive - SESISENAISP - Escolas\Gabriel_Almeida\LH_PET_WEB\obj\Debug\net9.0\refint\LH_PET_WEB.dll
 C:\Users\User\OneDrive - SESISENAISP - Escolas\Gabriel_Almeida\LH_PET_WEB\obj\Debug\net9.0\LH_PET_WEB.pdb
+=======
+>>>>>>> 2cfbdbae417f3303a31065a259960f3d4ea7ea98
